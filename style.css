@@ -55,6 +55,10 @@ button:hover {
   background-color: #00cccc;
 }
 
+#addTaskButton {
+  margin-top: 20px;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -97,4 +101,14 @@ li {
 
 #clearAllButton:hover {
   background-color: #ff3333;
+}
+
+.important {
+  color: #ff4d4d;
+  font-weight: bold;
+}
+.time {
+  margin-left: 10px;
+  font-size: 0.8rem;
+  color: #aaa;
 }

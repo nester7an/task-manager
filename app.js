@@ -1,39 +1,41 @@
 const taskManager = new TaskManager();
 const taskInput = document.getElementById('taskInput');
+const importantCheckbox = document.getElementById('importantCheckbox');
 const addTaskButton = document.getElementById('addTaskButton');
 const clearAllButton = document.getElementById('clearAllButton');
 const taskList = document.getElementById('taskList');
 
-// Функция для отображения задач
 function renderTasks() {
   taskList.innerHTML = '';
   taskManager.getTasks().forEach((task, index) => {
     const li = document.createElement('li');
     li.innerHTML = `
-      ${task.name} <span class="time"> ${task.timeAdded}</span>
+      <span class="${task.isImportant ? 'important' : ''}">
+        ${task.isImportant ? '❗ ' : ''}${task.name}
+      </span>
+      <span class="time">${task.timeAdded}</span>
       <button class="delete" onclick="deleteTask(${index})">Delete</button>
     `;
     taskList.appendChild(li);
   });
 }
 
-// Функция для добавления задачи
 function addTask() {
   const taskName = taskInput.value.trim();
+  const isImportant = importantCheckbox.checked;
   if (taskName) {
-    taskManager.addTask(taskName);
+    taskManager.addTask(taskName, isImportant);
     taskInput.value = '';
+    importantCheckbox.checked = false;
     renderTasks();
   }
 }
 
-// Функция для удаления задачи
 function deleteTask(index) {
   taskManager.removeTask(index);
   renderTasks();
 }
 
-// Функция для очистки всех задач
 function clearAllTasks() {
   taskManager.clearAllTasks();
   renderTasks();
@@ -42,5 +44,4 @@ function clearAllTasks() {
 addTaskButton.addEventListener('click', addTask);
 clearAllButton.addEventListener('click', clearAllTasks);
 
-// Изначально отобразить все задачи (если они есть)
 renderTasks();
